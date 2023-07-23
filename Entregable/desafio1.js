@@ -1,18 +1,23 @@
 class ProductManager {
+
+  static productId = 0
+
   constructor() {
     this.products = [];
+    
   }
 
   addProduct(title, description, price, thumbnail, code, stock) {
     if (this.products.find(product => product.code === code)) {
-      console.log('El código del producto ya existe');
-      return;
+      return console.log('El código del producto ya existe');
+      
     }
     if (!title || !description || !price || !thumbnail || !code || !stock) {
-      console.log('Faltan datos obligatorios');
-      return;
+      return console.log('Faltan datos obligatorios');
+      
     }
-    const id = this.products.length + 1;
+    
+    const id = ProductManager.productId + 1;
     this.products.push({
       id,
       title,
@@ -20,26 +25,28 @@ class ProductManager {
       price,
       thumbnail,
       code,
-      stock,
+      stock
     });
+    ProductManager.productId = id;
   }
 
   getProducts() {
     return this.products;
   }
 
+
   getProductById(id) {
     const product = this.products.find(product => product.id === id);
     if (!product) {
-      console.log('Producto no encontrado');
-      return;
+      
+      return "Producto no encontrado"
     }
     return product;
   }
 }
 
 const nuevoProducto = new ProductManager();
-const nuevoProducto2 = new ProductManager();
+
 
 nuevoProducto.addProduct(
   "Producto 1",
@@ -50,16 +57,45 @@ nuevoProducto.addProduct(
   10
 );
 
-nuevoProducto2.addProduct(
+nuevoProducto.addProduct(
   "Producto 2",
   "Este es el producto 2.",
   100,
   "Aca va la imagen",
-  
+  "11231",
+  10
+);
+nuevoProducto.addProduct(
+  "Producto 3",
+  "Este es el producto 3.",
+  100,
+  "Aca va la imagen",
+  "12345",
   10
 );
 
 
 
+
+
+
+
+nuevoProducto.addProduct(
+  "Producto 4",
+  "Este es el producto 4.",
+  100,
+  "Aca va la imagen",
+  "12345",
+  10
+);
+nuevoProducto.addProduct(
+  "Producto 5",
+  "Este es el producto 5.",
+  100,
+  "Aca va la imagen",
+  10
+);
+
 console.log(nuevoProducto.getProducts());
-console.log(nuevoProducto2.getProducts());
+console.log(nuevoProducto.getProductById(2))
+console.log(nuevoProducto.getProductById(50))
