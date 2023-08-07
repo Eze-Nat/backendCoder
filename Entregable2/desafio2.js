@@ -6,7 +6,7 @@ class ProductManager {
 
   constructor(filePath) {
     this.products = [];
-    this.path = filePath || "./productos.txt"    
+    this.path = filePath || "./productos.txt"
   }
 
   async writeProducts() {
@@ -19,16 +19,16 @@ class ProductManager {
   }
 
 
-  async addProduct(title, description, price, thumbnail, code, stock){
+  async addProduct(title, description, price, thumbnail, code, stock) {
     if (this.products.find(product => product.code === code)) {
       throw new Error('El código del producto ya existe');
-      
+
     }
     if (!title || !description || !price || !thumbnail || !code || !stock) {
       throw new Error('Faltan datos obligatorios');
-      
+
     }
-    
+
     const id = ProductManager.productId + 1;
     this.products.push({
       id,
@@ -44,7 +44,7 @@ class ProductManager {
     await this.writeProducts()
   }
 
-  async getProductFs(){
+  async getProductFs() {
     try {
       let readProduct = await fs.promises.readFile(this.path, "utf-8");
       return JSON.parse(readProduct)
@@ -70,13 +70,13 @@ class ProductManager {
         return "Producto no encontrado"
       }
       return productById;
-      
+
     } catch (error) {
       console.log("Error en el ID", error)
     }
   }
-  
-  async deleteProductById(id){
+
+  async deleteProductById(id) {
     try {
       let deleteProductFs = await this.getProductFs();
       let filterProduct = deleteProductFs.filter(products => products.id != id)
@@ -88,14 +88,14 @@ class ProductManager {
       throw error
     }
   }
-  async updateProduct({id, ...product}){
+  async updateProduct({ id, ...product }) {
     try {
       const existingProduct = this.products.find(prod => prod.id === id);
-      if(!existingProduct){
+      if (!existingProduct) {
         throw new Error("Producto no encontrado")
       }
-      for(const prop in product){
-        if (product.hasOwnProperty(prop)){
+      for (const prop in product) {
+        if (product.hasOwnProperty(prop)) {
           existingProduct[prop] = product[prop]
         }
       }
