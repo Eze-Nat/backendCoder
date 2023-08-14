@@ -12,38 +12,47 @@ class ProductManager {
 
   async writeProducts() {
     try {
+      
       await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2));
     } catch (error) {
       console.log("Error agregando productos")
       throw new Error("Error agregando productos")
     }
   }
+  
 
-
-  async addProduct(title, description, price, thumbnail, code, stock) {
+  async addProduct({ title, description, price, code, stock, thumbnail }) {
+   
+    
     if (this.products.find(product => product.code === code)) {
       throw new Error('El código del producto ya existe');
-
     }
-    if (!title || !description || !price || !thumbnail || !code || !stock) {
+    
+    if (!title || !description || !price || !code || !stock) {
       throw new Error('Faltan datos obligatorios');
-
     }
-
-    const id = ProductManager.productId + 1;
-    this.products.push({
+    
+    const id = this.products.length + 1;
+    const productData = {
       id,
       title,
       description,
       price,
-      thumbnail,
       code,
-      stock
-    });
+      stock,
+      status: true 
+    };
+    
+    if (thumbnail) {
+      productData.thumbnail = thumbnail;
+    }
+    
+    this.products.push(productData);
     ProductManager.productId = id;
 
     await this.writeProducts()
-  }
+}
+
 
   async getProductFs() {
     try {
@@ -57,9 +66,10 @@ class ProductManager {
   async getProducts() {
     try {
       let getResponse = await this.getProductFs()
-      console.log(getResponse)
+      return getResponse
     } catch (error) {
       console.log("Error obteniendo producto", error)
+      throw error
     }
   }
 
@@ -95,17 +105,26 @@ class ProductManager {
       if (!existingProduct) {
         throw new Error("Producto no encontrado")
       }
+  
+      console.log("Existing product before update:", existingProduct);
+  
       for (const prop in product) {
         if (product.hasOwnProperty(prop)) {
-          existingProduct[prop] = product[prop]
+          existingProduct[prop] = product[prop];
         }
       }
-      await this.writeProducts()
+  
+      console.log("Updated product:", existingProduct);
+  
+      await this.writeProducts();
+  
+      console.log("Products after update:", this.products);
     } catch (error) {
-      console.log("Error cambiando producto", error)
-      throw error
+      console.log("Error cambiando producto", error);
+      throw error;
     }
   }
+
   async loadProducts() {
     try {
       const data = await fs.promises.readFile(this.path, "utf-8");
