@@ -2,8 +2,7 @@ import express from "express";
 import handlebars from "express-handlebars";
 import __dirname from "./utils.js";
 import userRouter from './routes/users.js';
-import viewsRouter from "./routes/views.js";
-import {Server} from "socket.io"
+import viewsRouter from "./routes/views.js"
 
 const app = express();
 
@@ -15,14 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(express.static(__dirname + '/public'));
 
-app.use('/', viewsRouter)
+app.use('', viewsRouter)
 app.use('/api/users', userRouter)
 
 const server = app.listen(8080, () => {
   console.log('Server ON')
-})
-
-const socketServer = new Server(server)
-socketServer.on("connection", socket => {
-  console.log("Nuevo cliente conectado")
 })

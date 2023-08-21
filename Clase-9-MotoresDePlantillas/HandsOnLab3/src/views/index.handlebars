@@ -1,14 +1,5 @@
 <div>
-    <h1>Hola, {{user.name}}</h1>
-
-    {{#if isAdmin}}
-        {{#each foods}}
-            <div>
-                <p>{{this.name}} - Precio {{this.price}}</p>
-            </div>
-        {{/each}}
-    {{else}}
-        <p>No tienes permisos para ver la lista de alimentos</p>
-    {{/if}}
+    Todo listo para trabajar con websocket
 </div>
+<script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>

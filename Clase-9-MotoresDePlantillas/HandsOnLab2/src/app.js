@@ -12,7 +12,7 @@ app.set('view engine', 'handlebars');
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 
-app.use('/views', viewsRoute)
+app.use('/vFreesoundiews', viewsRoute)
 
 const server = app.listen(8080, () => {
   console.log('Server ON')
