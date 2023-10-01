@@ -44,8 +44,8 @@ passport.use('login', new LocalStrategy({
 ));
 
 passport.use('github', new GithubStrategy({
-    clientID: 'Iv1.ee97648ae80cadc5',
-    clientSecret: 'ac0a031c474ec921d210314ee4ae56734ef63a2e',
+    clientID: 'Iv1.a078062f0ca5b6de',
+    clientSecret: 'bd347b68656d720697f2c5b12ddb1d30ef177e07',
     callbackURL: 'http://localhost:8080/api/users/github'
 }, async (accessToken, refreshToken, profile, done) => {
     const user = await usersModel.findOne({ email: profile._json.email || profile._json.login });
