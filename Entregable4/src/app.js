@@ -22,7 +22,7 @@ app.use('/api/cart', cartRouter)
 
 /* app.get("/", (req, res) => {
     res.send("Servidor ON")
-}) */
+}) */Clase-
 
 app.get("/", async (req, res) => {
     try {
